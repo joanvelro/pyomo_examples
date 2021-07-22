@@ -1,0 +1,1 @@
+#define GCG_GITHASH "b6430305"
