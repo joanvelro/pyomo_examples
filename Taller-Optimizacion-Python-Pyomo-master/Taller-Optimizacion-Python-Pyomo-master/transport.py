@@ -81,7 +81,7 @@ def pyomo_postprocess(options=None, instance=None, results=None):
     model.x.display()
 
 # This is an optional code path that allows the script to be run outside of
-# pyomo command-line.  For example:  python transport.py
+# pyomo command-line.  For example:  python transport_v0.py
 if __name__ == '__main__':
     # This emulates what the pyomo command-line tools does
     from pyomo.opt import SolverFactory

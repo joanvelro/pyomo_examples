@@ -102,6 +102,16 @@ for worker in workers:
     )  # if not working on sunday but working saturday model.needed must be 1; else will be zero to reduce the obj function
 
 
+
+
+print(model.pprint())
+# Choose Solver
+if 1 == 1:
+    opt = SolverFactory('cbc.exe')  # cbc
+
+    # Solve Model
+    results = opt.solve(model, tee=True)
+
     def get_workers_needed(needed):
         """Extract to a list the needed workers for the optimal solution."""
         workers_needed = []
@@ -125,15 +135,7 @@ for worker in workers:
     def get_no_preference(no_pref):
         """Extract to a list the workers not satisfied with their weekend preference."""
         return [worker for worker in workers if no_pref[worker].value == 1]
-
-print(model.pprint())
-# Choose Solver
-if 1 == 1:
-    opt = SolverFactory('cbc.exe')  # cbc
-
-    # Solve Model
-    results = opt.solve(model, tee=True)
-
+    
     # Check the solution
     if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
         print(':::Feasible solution:::')
@@ -157,3 +159,6 @@ if 1 == 1:
         print('Status:', results.solver.status)
         # Something else is wrong
         print('termination condition:', results.solver.termination_condition)
+
+
+print(model.constraints.display())

@@ -8,10 +8,10 @@ To run this you need pyomo and a linear solver installed.
 When these dependencies are installed you can solve this example in one of
 this ways (glpk is the default solver):
  
-    ./transport.py (Linux only)
-    python transport.py
-    pyomo solve transport.py
-    pyomo solve --solver=glpk transport.py
+    ./transport_v0.py (Linux only)
+    python transport_v0.py
+    pyomo solve transport_v0.py
+    pyomo solve --solver=glpk transport_v0.py
  
 To display the results:
  
@@ -129,7 +129,7 @@ def pyomo_postprocess(options=None, instance=None, results=None):
 
 
 # This is an optional code path that allows the script to be run outside of
-# pyomo command-line.  For example:  python transport.py
+# pyomo command-line.  For example:  python transport_v0.py
 if __name__ == '__main__':
     # This replicates what the pyomo command-line tools does
     from pyomo.opt import SolverFactory
