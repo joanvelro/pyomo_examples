@@ -1,0 +1,17 @@
+load Buses_pyomo.csv format=set : Buses;
+load Phases_pyomo.csv format=set : Phases_abc;
+load Time_pyomo.csv format=set : time;
+load Data_time_pyomo.csv format=set : data_time;
+load Lines_pyomo.csv format=set : Lines;
+load Loads_pyomo.csv format=set : Loads;
+load PVs_pyomo.csv format=set : PVs;
+
+load Y_bus_pyomo.csv: [Bus_k,Bus_j,Phase_k,Phase_j] Bus_G Bus_B ;
+load Connectivity_pyomo.csv: [Bus_k,Bus_j] Connectivity ;
+load Lines_buses_pyomo.csv: [Lines] Lines_k Lines_i ;
+load V_init_pyomo.csv: [Bus_k,Phase_k,data_time] Vinit Vinitre_pu Vinitim_pu;
+load Loads_data_pyomo.csv: [Loads] Load_bus_conn Load_phase_conn Load_Vnom;
+
+load PVs_data_pyomo.csv: [PVs] PV_sizes PVs_bus_conn PVs_phase_conn;
+load Percent_Gen_pyomo.csv: [data_time] Percent_Gen;
+load Loads_Dem_pyomo.csv: [Loads,data_time] PDem QDem ZIP_P_P ZIP_P_I ZIP_P_Z ZIP_Q_P ZIP_Q_I ZIP_Q_Z;
