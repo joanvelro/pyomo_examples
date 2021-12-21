@@ -1,0 +1,14 @@
+name: pyomo-environment
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - numpy
+  - scipy
+  - matplotlib
+  - pandas
+  - pyomo
+  - pyomo.extras
+  - glpk
+  - ipopt
+  
