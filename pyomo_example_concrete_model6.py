@@ -121,6 +121,7 @@ model.total_cost = pyo.Expression(rule=cost_rule)
 def income_rule(model):
     return sum(model.production[t, j] * model.prices[t, j] for j in model.j for t in model.t)
 
+#a = [i for i in model.x.items()]
 
 model.total_income = pyo.Expression(rule=income_rule)
 

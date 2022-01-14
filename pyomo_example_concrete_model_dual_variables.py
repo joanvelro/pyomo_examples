@@ -1,5 +1,4 @@
 import pyomo.environ as pyo
-import numpy as np
 
 model = pyo.ConcreteModel()
 
