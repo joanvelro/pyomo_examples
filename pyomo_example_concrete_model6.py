@@ -70,7 +70,6 @@ prices = {(1, 1): 21.50,
 # a quantity A(i,j) of raw material i is necessary to build a unit of final product j
 A = {(i, j): np.random.random() for i in range(1, n + 1) for j in range(1, m + 1)}
 
-
 # model
 model = pyo.ConcreteModel()
 
@@ -121,7 +120,8 @@ model.total_cost = pyo.Expression(rule=cost_rule)
 def income_rule(model):
     return sum(model.production[t, j] * model.prices[t, j] for j in model.j for t in model.t)
 
-#a = [i for i in model.x.items()]
+
+# a = [i for i in model.x.items()]
 
 model.total_income = pyo.Expression(rule=income_rule)
 
@@ -154,7 +154,8 @@ print('--- Model Results ---')
 
 
 # Check the solution
-if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
+if (results.solver.status == SolverStatus.ok) and (
+        results.solver.termination_condition == TerminationCondition.optimal):
     print(':::Feasible solution:::')
 
     print('--- Problem Results ---')
@@ -187,5 +188,3 @@ else:
     print('Status:', results.solver.status)
     # Something else is wrong
     print('termination condition:', results.solver.termination_condition)
-
-
