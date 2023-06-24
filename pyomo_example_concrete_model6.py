@@ -19,6 +19,23 @@ import numpy as np
 
 np.random.seed(0)
 
+import shutil
+import sys
+import os.path
+
+if not shutil.which("pyomo"):
+    os.system('pip install -q pyomo')
+    assert (shutil.which("pyomo"))
+
+if not (shutil.which("cbc") or os.path.isfile("cbc")):
+    if "google.colab" in sys.modules:
+        os.system('apt-get install -y -qq coinor-cbc')
+    else:
+        try:
+            os.system('conda install -c conda-forge coincbc')
+        except:
+            pass
+
 # data
 n = 5  # coefficients (raw materials)
 m = 4  # decision variables (final products)
@@ -70,7 +87,6 @@ prices = {(1, 1): 21.50,
 # a quantity A(i,j) of raw material i is necessary to build a unit of final product j
 A = {(i, j): np.random.random() for i in range(1, n + 1) for j in range(1, m + 1)}
 
-
 # model
 model = pyo.ConcreteModel()
 
@@ -121,7 +137,8 @@ model.total_cost = pyo.Expression(rule=cost_rule)
 def income_rule(model):
     return sum(model.production[t, j] * model.prices[t, j] for j in model.j for t in model.t)
 
-#a = [i for i in model.x.items()]
+
+# a = [i for i in model.x.items()]
 
 model.total_income = pyo.Expression(rule=income_rule)
 
@@ -142,7 +159,6 @@ print('\n')
 print('\n')
 print('--- Model Solver ---')
 opt = SolverFactory("cbc.exe")  # glpk
-
 results = opt.solve(model, tee=True)  # tee=True for details
 
 print('\n')
@@ -154,7 +170,8 @@ print('--- Model Results ---')
 
 
 # Check the solution
-if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
+if (results.solver.status == SolverStatus.ok) and (
+        results.solver.termination_condition == TerminationCondition.optimal):
     print(':::Feasible solution:::')
 
     print('--- Problem Results ---')
@@ -187,5 +204,3 @@ else:
     print('Status:', results.solver.status)
     # Something else is wrong
     print('termination condition:', results.solver.termination_condition)
-
-

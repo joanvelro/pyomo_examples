@@ -99,7 +99,8 @@ for worker in workers:
     model.constraints.add(
         model.no_pref[worker] >= sum(model.works[worker, 'Sat', shift] for shift in days_shifts['Sat'])
         - sum(model.works[worker, 'Sun', shift] for shift in days_shifts['Sun'])
-    )  # if not working on sunday but working saturday model.needed must be 1; else will be zero to reduce the obj function
+    )  # if not working on sunday but working saturday model.needed must be 1; else will be zero to reduce the obj
+    # function
 
 
 
@@ -107,7 +108,7 @@ for worker in workers:
 print(model.pprint())
 # Choose Solver
 if 1 == 1:
-    opt = SolverFactory('cbc.exe')  # cbc
+    opt = SolverFactory('cbc')  # cbc
 
     # Solve Model
     results = opt.solve(model, tee=True)
