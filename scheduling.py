@@ -23,9 +23,9 @@ model.works = pyo.Var(((worker, day, shift) for worker in workers for day in dat
 model.needed = pyo.Var(workers, within=pyo.Binary, initialize=0)
 
 
-def obj_rule(m):
+def obj_rule(model):
     c = len(workers)
-    return sum(m.needed[worker] for worker in workers)
+    return sum(model.needed[worker] for worker in workers)
 
 
 model.obj = pyo.Objective(rule=obj_rule, sense=pyo.minimize)
@@ -45,7 +45,6 @@ for worker in workers:
 # for worker in workers:
 #    model.constraints.add(
 #        52 >= sum(shift_len[day, shift] * model.works[worker, day, shift] for day in date for shift in days_shifts[day]))
-
 
 results = pyo.SolverFactory('glpk').solve(model)
 # results.write()
