@@ -14,7 +14,7 @@ x_0 = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
 # x_0 = {0:1000, 1:1000, 2:5000, 3:200, 4:4000}
 
 model.i = pyo.Set(initialize=range(n))
-
+model.i = [0, 1, 2, 3, 4]
 model.x = pyo.Var(model.i, domain=pyo.NonNegativeReals, bounds=(0, 1000000), initialize=x_0)
 
 model.OBJ = pyo.Objective(expr=sum(c[i] * model.x[i] for i in model.i), sense=pyo.minimize)
@@ -23,16 +23,16 @@ model.Constraint1 = pyo.Constraint(expr=sum(a[i] * model.x[i] for i in model.i) 
 
 
 def rule_exp(model, i):
-    return model.x[i] >= d[i]
+    return model.x[i] >= 1
 
 
 model.Constraint2 = pyo.Constraint(model.i, rule=rule_exp)
 
 print(model.pprint())
 
-opt = SolverFactory("glpk")
+opt = SolverFactory("Bonmin")
 
-results = opt.solve(model, tee=False)  # tee=True for details
+results = opt.solve(model, tee=True)  # tee=True for details
 
 # send results to stdout
 results.write()

@@ -158,7 +158,7 @@ print(model.pprint())
 print('\n')
 print('\n')
 print('--- Model Solver ---')
-opt = SolverFactory("cbc.exe")  # glpk
+opt = SolverFactory("cbc")  # glpk
 results = opt.solve(model, tee=True)  # tee=True for details
 
 print('\n')
