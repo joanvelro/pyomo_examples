@@ -21,7 +21,6 @@ model.OBJ = pyo.Objective(expr=sum(c[i] * model.x[i] for i in model.i), sense=py
 
 model.Constraint1 = pyo.Constraint(expr=sum(a[i] * model.x[i] for i in model.i) >= b)
 
-
 def rule_exp(model, i):
     return model.x[i] >= 1
 

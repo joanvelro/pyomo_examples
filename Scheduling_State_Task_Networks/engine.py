@@ -40,7 +40,7 @@ class Engine(object):
         self.model = None
         self.data = model_data
 
-    def execute(self, verbosity=False, solver: int = 'cbc'):
+    def execute(self, verbosity: bool = True, solver: int = 'cbc'):
         try:
             self.build_parameters()
             self.build_model()
