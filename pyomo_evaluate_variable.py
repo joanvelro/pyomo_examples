@@ -1,9 +1,11 @@
 from pyomo.environ import *
 
+
 # Definir función externa
 def evaluate_variable_value(variable):
     value = variable.value
     print("Value of variable:", value)
+
 
 # Crear modelo
 model = ConcreteModel()
@@ -14,7 +16,6 @@ model.x = Var(domain=NonNegativeReals)
 # Restricción
 model.constraint = Constraint(expr=model.x >= 10)
 
-
 # Solucionar el modelo
 solver = SolverFactory('glpk')
 results = solver.solve(model)
@@ -22,7 +23,6 @@ results = solver.solve(model)
 # Evaluar el valor de la variable de decisión durante la ejecución
 current_value = model.x.value
 print("Current value of x:", current_value)
-
 
 # Modificar el valor de la variable de decisión
 model.x.value = 15

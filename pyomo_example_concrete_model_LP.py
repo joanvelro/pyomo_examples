@@ -9,7 +9,6 @@
     Usage: pyomo sensit1.py
 """
 
-
 import pyomo.environ as pyo
 
 # Data for Linear Optimization Problem
@@ -32,12 +31,15 @@ model.Constraint1 = pyo.Constraint(expr=8.0 * model.x[1] + 6.0 * model.x[2] + 8.
 model.Constraint2 = pyo.Constraint(expr=4.0 * model.x[1] + 2.0 * model.x[2] + 1.5 * model.x[3] <= 20.0)
 model.Constraint3 = pyo.Constraint(expr=6.0 * model.x[1] + 3.0 * model.x[2] + 1.5 * model.x[3] <= 60.0)
 
-results = pyo.SolverFactory('glpk').solve(model)
-
 from pyomo.opt import SolverFactory, SolverStatus, TerminationCondition
 
+results = pyo.SolverFactory('glpk').solve(model)
+
+
+
 # Check the solution
-if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
+if (results.solver.status == SolverStatus.ok) and (
+        results.solver.termination_condition == TerminationCondition.optimal):
     print(':::Feasible solution:::')
 
     print('--- Problem Results ---')
