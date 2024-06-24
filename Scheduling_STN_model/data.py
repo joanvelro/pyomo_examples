@@ -1,5 +1,4 @@
-def hydrolubes() -> dict:
-    H = 4 * 24 * 7
+def hydrolubes(H) -> dict:
     Hydrolubes = {
         # time grid
         'TIME': range(0, H + 1),

@@ -40,7 +40,8 @@ class Engine(object):
         self.model = None
         self.data = model_data
 
-    def execute(self, verbosity: bool = True, solver: int = 'cbc'):
+    def execute(self, opt_params, verbosity: bool = True, solver: str = 'cbc',
+                ):
         try:
             self.build_parameters()
             self.build_model()
@@ -52,7 +53,7 @@ class Engine(object):
             print('Num. constraints: {}'.format(self.number_constraints))
             print('Num. objectives: {}'.format(self.number_objectives))
 
-            self.solve_model(verbosity, solver)
+            self.solve_model(verbosity, solver, opt_params)
             self.calculate_results()
             logger.info('\nOptimization completed!')
 
@@ -172,38 +173,38 @@ class Engine(object):
         # unit terminal condition
         self.model.tc = Constraint(self.UNITS, rule=lambda model, j: model.Q[j, self.H] == 0)
 
-    def solve_model(self, verbosity: bool = True, solver: int = 'cbc'):
+    def solve_model(self,
+                    verbosity: bool = True,
+                    solver: str = 'cplex',
+                    executable: str = '/Applications/CPLEX_Studio_Community2211/cplex/bin/x86-64_osx/cplex',
+                    opt_params: dict = dict()):
         """
         TBD
 
         """
         logger.info('Solving Model...')
+        opt = SolverFactory(solver)
 
-        solver = 'cplex'
-        executable = '/Applications/CPLEX_Studio_Community2211/cplex/bin/x86-64_osx/cplex'
-        # opt = SolverFactory(solver,  executable =executable )  # glpk
-        #opt = pyo.SolverFactory(solver, executable=executable)
-
-
-        if solver=='cbc':
-            opt = SolverFactory(solver)
+        if solver == 'cbc':
             opt.options['integertolerance'] = 1e-6
             opt.options['ratioGAP'] = 0.005
             opt.options['timeMode'] = 'elapsed'
             opt.options['seconds'] = 1000
-        elif solver=='cplex':
+        elif solver == 'cplex':
             opt = SolverFactory(solver, executable=executable)
             opt.options["timelimit"] = 300
-            opt.options["mipgap"] = 0.01
-        opt.solve(self.model, tee=verbosity).write()
+            opt.options["mipgap"] = opt_params.get("mipgap", 0.01)
+
+        results = opt.solve(self.model, tee=verbosity)
 
         print('\n')
         print('\n')
         print("Value of State Inventories = {0:12.2f}".format(self.model.Value()))
         print("  Cost of Unit Assignments = {0:12.2f}".format(self.model.Cost()))
         print("             Net Objective = {0:12.2f}".format(self.model.Value() - self.model.Cost()))
-
         logger.info('\t Done!...')
+        return results
+
 
     def get_UnitAssignment(self):
 
