@@ -1,0 +1,59 @@
+[tool.poetry]
+name = "pyomo-examples"
+version = "0.0.0"
+description = "Pyomo optimization examples"
+authors = [
+     "Jose Angel Velasco <joseangel.velasco@yahoo.es>",
+           ]
+license = "Private"
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Pyomo = "^6.4.2"
+pyvis = "^0.1.9"
+numpy = "^1.24.2"
+pandas = "^2.0.0"
+openpyxl = "^3.1.2"
+ipykernel = "^6.22.0"
+xlsxwriter = "^3.0.9"
+ortools = "^9.10.4067"
+
+[tool.poetry.group.test.dependencies]
+mypy = "^1.1.1"
+twine = "^4.0.2"
+flake8 = "^6.0.0"
+pytest = "^7.2.2"
+mccabe = "^0.7.0"
+vulture = "^2.7.0"
+pytest-cov = "^4.0.0"
+
+[tool.poetry.group.doc.dependencies]
+nbconvert = "^6.5.0"
+mkdocs-material = "^8.2.9"
+mkdocs-jupyter = "^0.21.0"
+mkdocs-gen-files = "^0.3.4"
+mkdocs-simple-hooks = "^0.1.5"
+mkdocs-literate-nav = "^0.4.1"
+mkdocs-markdownextradata-plugin = "^0.2.5"
+mkdocstrings = {extras = ["python-legacy"], version = "^0.19.0"}
+
+[[tool.poetry.source]]
+name = 'pypy'
+url = 'https://pypi.org/simple'
+
+
+[[tool.mypy.overrides]]
+module = [
+    'pyomo.*'
+]
+
+[virtualenvs]
+in-project = false
+
+ignore_missing_imports = true
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
